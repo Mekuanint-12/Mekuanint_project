@@ -1,0 +1,41 @@
+# Base class
+class Device:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+    
+    def power_on(self):
+        print(f"{self.brand} {self.model} is now powered on.")
+
+    def power_off(self):
+        print(f"{self.brand} {self.model} is shutting down.")
+
+
+# Derived class (Inheritance from Device)
+class Smartphone(Device):
+    def __init__(self, brand, model, os, storage):
+        super().__init__(brand, model)   # Inherit brand & model
+        self.os = os
+        self.storage = storage
+        self.apps = []
+
+    # Encapsulation example: using a method to safely update storage
+    def install_app(self, app_name, size):
+        if size <= self.storage:
+            self.apps.append(app_name)
+            self.storage -= size
+            print(f"Installed {app_name}. Remaining storage: {self.storage} GB")
+        else:
+            print("Not enough storage to install this app!")
+
+    def list_apps(self):
+        print("Installed apps:", ", ".join(self.apps) if self.apps else "No apps installed.")
+
+
+# Example usage
+phone1 = Smartphone("Apple", "iPhone 14", "iOS", 128)
+phone1.power_on()
+phone1.install_app("Instagram", 2)
+phone1.install_app("Spotify", 3)
+phone1.list_apps()
+phone1.power_off()
